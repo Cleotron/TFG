@@ -8,7 +8,6 @@ import dataclasses
 import math
 
 
-#nodos
 
 @dataclasses.dataclass
 class Base:

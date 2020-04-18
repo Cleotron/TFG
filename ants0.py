@@ -46,6 +46,18 @@ truck = 0;
 #best path so far
 best = []
 
+#pheromone in each branch
+#every branch starts with 1 unit 
+phe = {}
+
+for x in original:
+    phe[x.name] = {}
+    for y in original:
+        phe[x.name][y.name] = 1
+
+print(phe)
+
+
 #choose the best path in 100 iterations
 for _ in range(100):
     bases = original.copy() 
@@ -53,7 +65,7 @@ for _ in range(100):
     
     while (len(bases) > 0):
     
-        x = random.randrange(len(bases))
+        x = random.randrange(len(bases)) #cambiar para que no sea totalmente aleatoria (pesos)
         
         visited.append(bases[x])
         
@@ -72,10 +84,12 @@ for _ in range(100):
                 
         if bases[x].demand == 0:
             bases.remove(bases[x])
-            
-    print("----")    
-    print("visited:", [o.name for o in visited])
-    print("distance visited:" , get_distance(visited)) 
+     
+    #añadir feromona en todas las bases de visited
+    
+    #print("----")    
+    #print("visited:", [o.name for o in visited])
+    #print("distance visited:" , get_distance(visited)) 
     
     if (not best) or (get_distance(visited) < get_distance(best)):
         best = visited
