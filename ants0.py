@@ -7,7 +7,6 @@ Created on Thu Apr 16 19:31:09 2020
 import dataclasses
 import math
 import random
-#import pdb; pdb.set_trace()
 
 def get_euclidean(a, b):
     return math.sqrt(pow(a.long - b.long, 2) + pow(a.lat - b.lat, 2))
@@ -21,7 +20,6 @@ def get_distance(base_list):
     
     return distance
 
-#estaciones
 @dataclasses.dataclass
 class Base:
     name: str
@@ -36,21 +34,19 @@ p3 = Base("Alcalá", -3.6801307, 40.4226906, -3)
 p4 = Base("Alcántara", -3.6738714, 40.4261851, 4)
 p5 = Base("Almadén", -3.693225, 40.4108472,-1)
 
+#list of all the stations
 original = [p1, p2, p3, p4, p5] 
 
-#camion inicialmente sin bicis
-truck = 0;
-
-#lista de mejor camino hasta ahora
-best = []
-
-#ir a una estacion aleatoria - si demand = 0 eliminar de la lista
-#coger/dejar bicis
-#repetir hasta lista vacía
-
+#remove stations with demand = 0
 original = [b for b in original if b.demand != 0]
 
-#bucle con 20 repeticiones y quedarse con la mejor
+#truck initially empty
+truck = 0;
+
+#best path so far
+best = []
+
+#choose the best path in 100 iterations
 for _ in range(100):
     bases = original.copy() 
     visited = []
@@ -76,6 +72,7 @@ for _ in range(100):
                 
         if bases[x].demand == 0:
             bases.remove(bases[x])
+            
     print("----")    
     print("visited:", [o.name for o in visited])
     print("distance visited:" , get_distance(visited)) 
