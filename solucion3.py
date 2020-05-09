@@ -55,7 +55,7 @@ def get_path(original):
     set_pheromones(phe, original)
     
     #choose the best path in 100 iterations
-    for _ in range(100):
+    for _ in range(50):
         bases = original.copy() 
         visited = []
         
@@ -90,7 +90,7 @@ def get_path(original):
         if (not best) or (get_distance(visited) < get_distance(best)):
             best = visited
         
-        return best
+    return best
  
 def main():
     original = load_data('C:\\Users\\ana\\Nextcloud\\UOC\\PECS2020\\codigoTFG\\Bicimad0618.csv')
