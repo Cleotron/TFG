@@ -8,11 +8,13 @@ Created on Wed May  6 13:27:34 2020
 import unittest
 import random
 
-from solucion3 import Base, get_euclidean, get_distance, get_path, set_pheromones
+import data
 
-a = Base("Base_a", 1, 3, -3)
-b = Base("Base_b", 2, 4, 4)
-c = Base("Base_c", 0, -6, -1)
+from solucion3 import get_euclidean, get_distance, get_path, set_pheromones
+
+a = data.Base("Base_a", 1, 3, -3)
+b = data.Base("Base_b", 2, 4, 4)
+c = data.Base("Base_c", 0, -6, -1)
 
 base_list = [a, b, c]
 

@@ -4,15 +4,16 @@ Created on Tue May  5 13:17:52 2020
 
 @author: ana
 """
+import data
 
 import unittest
 import random
 
-from solucion1 import Base, get_euclidean, get_distance, get_path
+from solucion1 import get_euclidean, get_distance, get_path
 
-a = Base("Base_a", 1, 3, -3)
-b = Base("Base_b", 2, 4, 4)
-c = Base("Base_c", 0, -6, -1)
+a = data.Base("Base_a", 1, 3, -3)
+b = data.Base("Base_b", 2, 4, 4)
+c = data.Base("Base_c", 0, -6, -1)
 
 base_list = [a, b, c]
 
