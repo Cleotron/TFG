@@ -6,6 +6,7 @@ Created on Mon Apr 13 19:00:16 2020
 """
 import math
 
+from bases_csv import load_data
 import data
 
 
@@ -27,15 +28,12 @@ def get_path(bases):
     return ordered
 
 def main():
-    p1 = data.Base("Agustín de Betancourt", -3.6956047, 40.4440297, -4)
-    p2 = data.Base("Alberto Alcocer", -3.684715,40.4585318, 4)
-    p3 = data.Base("Alcalá", -3.6801307, 40.4226906, -3)
-    p4 = data.Base("Alcántara", -3.6738714, 40.4261851, 4)
-    p5 = data.Base("Almadén", -3.693225, 40.4108472,-1)
+    original = load_data('C:\\Users\\ana\\Nextcloud\\UOC\\PECS2020\\codigoTFG\\Bicimad0618.csv')
     
-    bases = [p1, p2, p3, p4, p5] 
+    #remove stations with demand = 0
+    original = [b for b in original if b.demand != 0]
 
-    result = get_path(bases)
+    result = get_path(original)
     print([o.name for o in result])
     print("total:" , get_distance(result))
 

@@ -7,6 +7,7 @@ Created on Thu Apr 16 19:31:09 2020
 import math
 import random
 
+from bases_csv import load_data
 import data
 
 
@@ -63,21 +64,14 @@ def get_path(original):
     return best
 
 def main():
-    p1 = data.Base("Agustín de Betancourt", -3.6956047, 40.4440297, -4)
-    p2 = data.Base("Alberto Alcocer", -3.684715,40.4585318, 4)
-    p3 = data.Base("Alcalá", -3.6801307, 40.4226906, -3)
-    p4 = data.Base("Alcántara", -3.6738714, 40.4261851, 4)
-    p5 = data.Base("Almadén", -3.693225, 40.4108472,-1)
-    
-    #list of all the stations
-    original = [p1, p2, p3, p4, p5] 
+    original = load_data('C:\\Users\\ana\\Nextcloud\\UOC\\PECS2020\\codigoTFG\\Bicimad0618.csv')
     
     #remove stations with demand = 0
     original = [b for b in original if b.demand != 0]
+
     result = get_path(original)
     print([o.name for o in result])
     print("total:" , get_distance(result))
-
 
 if __name__ == "__main__":
     main()
