@@ -5,6 +5,7 @@ Created on Sun Apr 19 16:45:33 2020
 @author: ana
 """ 
 
+import copy
 import math
 import random
 
@@ -56,7 +57,7 @@ def get_path(original):
     
     #choose the best path in 100 iterations
     for _ in range(50):
-        bases = original.copy() 
+        bases = copy.deepcopy(original) 
         visited = []
         
         #first base is chosen at random

@@ -4,6 +4,7 @@ Created on Thu Apr 16 19:31:09 2020
 
 @author: ana
 """
+import copy
 import math
 import random
 
@@ -33,7 +34,7 @@ def get_path(original):
     best = []
 
     for _ in range(100):
-        bases = original.copy() 
+        bases = copy.deepcopy(original) 
         visited = []
         
         while (len(bases) > 0):
