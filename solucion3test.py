@@ -10,7 +10,7 @@ import random
 
 import data
 
-from solucion3 import get_euclidean, get_distance, get_path, set_pheromones
+from solucion3 import get_euclidean, get_distance, get_path, set_pheromones, choose_from_list, choose_next
 
 a = data.Base("Base_a", 1, 3, -3)
 b = data.Base("Base_b", 2, 4, 4)
@@ -44,16 +44,25 @@ class TestGetDistance(unittest.TestCase):
 class TestGetPath(unittest.TestCase):
     def test_get_path(self):
         random.seed(1)
-        path = get_path(base_list)
-        self.assertEqual(path, [c, a, b]) 
-        
-class TestSetPheromones(unittest.TestCase):
-    def test_set_pheromones(self):
-        phe_list = set_pheromones(phe, base_list)
-        self.assertEqual(phe, {'Base_a': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
-                               'Base_b': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
-                               'Base_c': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1}})
-        
+        path = get_path(base_list, 5)
+        self.assertEqual(path[0].name, "Base_b")
+        self.assertEqual(path[1].name, "Base_a")
+        self.assertEqual(path[2].name, "Base_c")
+
+class TestChooseFromList(unittest.TestCase):
+    def test_choose_from_list(self):
+        choose = choose_from_list(base_list, [1.5, 6.1, 2, 4], 0)
+        self.assertEqual(choose, 0) 
+
+class TestChooseNext(unittest.TestCase):
+    def setUp(self):
+        self.phe = {'Base_a': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
+                    'Base_b': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
+                    'Base_c': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1}}
+    def test_choose_next(self):
+        next = choose_next(1, base_list, self.phe, 5)
+        self.assertTrue(0 <= next < len(base_list))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -11,6 +11,7 @@ import random
 
 from bases_csv import load_data
 import data
+import solucion1
 
 
 def get_euclidean(a, b):
@@ -26,23 +27,50 @@ def get_distance(base_list):
     return distance
 
 
-def set_pheromones(phe, original):
+def set_pheromones(phe, original, ants):
     for x in original:
         phe[x.name] = {}
         for y in original:
-            phe[x.name][y.name] = 1
-            
-            
-def choose_next(now, bases, visited, phe):
-    weighed = []
-    for i, base in enumerate(bases):
-        if base not in visited:
-            pherom = phe[bases[now].name][base.name]
-            for _ in range(pherom):
-                weighed.append(i)   
-    return random.choice(weighed) 
+            d = get_distance(solucion1.get_path(original))
+            init_phe = ants/ d
+            phe[x.name][y.name] = init_phe
 
-def get_path(original):
+
+def choose_from_list(bases, l, n):
+    sum = 0
+    for i, element in enumerate(l):
+        if element != 0:
+            sum += element
+            if sum >= n:
+                return i
+    return -1
+            
+def choose_next(now, bases, phe, truck):
+    # weighed = []
+    # for i, base in enumerate(bases):
+    #     if base not in visited:
+    #         pherom = phe[bases[now].name][base.name]
+    #         for _ in range(pherom):
+    #             weighed.append(i)   
+    # return random.choice(weighed) 
+    
+    prob_list = []
+    sum_prob = 0
+    for i, base in enumerate(bases):
+        phi = phe[bases[now].name][base.name]
+        d = get_euclidean(bases[now], base)
+        #if bases[now].name == base.name:
+        if d == 0 or base.demand == 0 or (base.demand < 0 and -base.demand > truck):    
+            prob = 0
+        else:
+            prob = phi / (d**2)
+            #prob = random.uniform(1000, 10000)
+        sum_prob += prob
+        prob_list.append(prob)
+    n = random.uniform(0.0, sum_prob)    
+    return choose_from_list(bases, prob_list, n)
+
+def get_path(original, ants):
 
     #truck initially empty
     truck = 0;
@@ -53,18 +81,18 @@ def get_path(original):
     #pheromone in each branch
     #every branch starts with 1 unit 
     phe = {}
-    set_pheromones(phe, original)
+    set_pheromones(phe, original, ants)
     
     #choose the best path in 100 iterations
-    for _ in range(50):
+    for _ in range(ants):
         bases = copy.deepcopy(original) 
         visited = []
         
         #first base is chosen at random
         now = random.randint(0, len(bases) - 1)
         
-        while len(bases) > len(visited):     
-            next = choose_next(now, bases, visited, phe)
+        while any([b.demand < 0 for b in bases]):     
+            next = choose_next(now, bases, phe, truck)
             
             #update pheromones
             phe[bases[now].name][bases[next].name] += 1  
@@ -99,7 +127,7 @@ def main():
     #remove stations with demand = 0
     original = [b for b in original if b.demand != 0]
 
-    result = get_path(original)
+    result = get_path(original, 50)
     print([o.name for o in result])
     print("total:" , get_distance(result))
 
