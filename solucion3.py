@@ -52,13 +52,6 @@ def choose_from_list(bases, l, n):
     return -1
             
 def choose_next(now, bases, phe, truck):
-    # weighed = []
-    # for i, base in enumerate(bases):
-    #     if base not in visited:
-    #         pherom = phe[bases[now].name][base.name]
-    #         for _ in range(pherom):
-    #             weighed.append(i)   
-    # return random.choice(weighed) 
     
     prob_list = []
     sum_prob = 0
