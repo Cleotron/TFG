@@ -10,7 +10,7 @@ import random
 
 import data
 
-from solucion3 import get_euclidean, get_distance, get_path, set_pheromones, choose_from_list, choose_next
+from solucion3 import get_euclidean, get_distance, get_path, set_pheromones, choose_from_list, choose_next, phe_evaporation
 
 a = data.Base("Base_a", 1, 3, -3)
 b = data.Base("Base_b", 2, 4, 4)
@@ -62,7 +62,23 @@ class TestChooseNext(unittest.TestCase):
     def test_choose_next(self):
         next = choose_next(1, base_list, self.phe, 5)
         self.assertTrue(0 <= next < len(base_list))
-
+        
+class TestPheEvaporation(unittest.TestCase):
+    def setUp(self):
+        self.phe = {'Base_a': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
+                    'Base_b': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
+                    'Base_c': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1}}
+    def test_phe_evaporation_a(self):
+        self.assertEqual(phe_evaporation(self.phe, base_list, 0.5), 
+                    {'Base_a': {'Base_a': 0.5, 'Base_b': 0.5, 'Base_c': 0.5},
+                    'Base_b': {'Base_a': 0.5, 'Base_b': 0.5, 'Base_c': 0.5},
+                    'Base_c': {'Base_a': 0.5, 'Base_b': 0.5, 'Base_c': 0.5}})
+    def test_phe_evaporation_b(self):
+        self.assertEqual(phe_evaporation(self.phe, base_list, 0.4), 
+                    {'Base_a': {'Base_a': 0.6, 'Base_b': 0.6, 'Base_c': 0.6},
+                    'Base_b': {'Base_a': 0.6, 'Base_b': 0.6, 'Base_c': 0.6},
+                    'Base_c': {'Base_a': 0.6, 'Base_b': 0.6, 'Base_c': 0.6}})
+        
 
 if __name__ == '__main__':
     unittest.main()

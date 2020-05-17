@@ -35,6 +35,12 @@ def set_pheromones(phe, original, ants):
             init_phe = ants/ d
             phe[x.name][y.name] = init_phe
 
+def phe_evaporation(phe, bases, p):
+    for x in bases:
+        for y in bases:
+            phe[x.name][y.name] = phe[x.name][y.name] * (1 - p)
+    return phe
+    
 
 def choose_from_list(bases, l, n):
     sum = 0
@@ -115,6 +121,9 @@ def get_path(original, ants):
             
             #update visited
             visited.append(bases[next])
+            
+            #pheromone evaporation
+            phe_evaporation(phe, bases, 0.5)
         
         if (not best) or (get_distance(visited) < get_distance(best)):
             best = visited
