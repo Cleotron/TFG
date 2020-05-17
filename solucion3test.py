@@ -10,7 +10,7 @@ import random
 
 import data
 
-from solucion3 import get_euclidean, get_distance, get_path, set_pheromones, choose_from_list, choose_next, phe_evaporation
+from solucion3 import get_euclidean, get_distance, get_path, set_pheromones, choose_from_list, choose_next, phe_evaporation, update_pheromones
 
 a = data.Base("Base_a", 1, 3, -3)
 b = data.Base("Base_b", 2, 4, 4)
@@ -69,16 +69,34 @@ class TestPheEvaporation(unittest.TestCase):
                     'Base_b': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
                     'Base_c': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1}}
     def test_phe_evaporation_a(self):
-        self.assertEqual(phe_evaporation(self.phe, base_list, 0.5), 
+        phe_evaporation(self.phe, base_list, 0.5)
+        self.assertEqual(self.phe, 
                     {'Base_a': {'Base_a': 0.5, 'Base_b': 0.5, 'Base_c': 0.5},
                     'Base_b': {'Base_a': 0.5, 'Base_b': 0.5, 'Base_c': 0.5},
                     'Base_c': {'Base_a': 0.5, 'Base_b': 0.5, 'Base_c': 0.5}})
     def test_phe_evaporation_b(self):
-        self.assertEqual(phe_evaporation(self.phe, base_list, 0.4), 
+        phe_evaporation(self.phe, base_list, 0.4)
+        self.assertEqual(self.phe, 
                     {'Base_a': {'Base_a': 0.6, 'Base_b': 0.6, 'Base_c': 0.6},
                     'Base_b': {'Base_a': 0.6, 'Base_b': 0.6, 'Base_c': 0.6},
                     'Base_c': {'Base_a': 0.6, 'Base_b': 0.6, 'Base_c': 0.6}})
         
+class TestUpdatePheromones(unittest.TestCase):
+    def setUp(self):
+        self.phe = {'Base_a': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
+                    'Base_b': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
+                    'Base_c': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1}}
+        self.visited = [a, b]
+    def test_update_pheromones(self):
+        update_pheromones(self.phe, self.visited, 2)
+        self.assertEqual(self.phe, 
+                    {'Base_a': {'Base_a': 1, 'Base_b': 3, 'Base_c': 1},
+                     'Base_b': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1},
+                     'Base_c': {'Base_a': 1, 'Base_b': 1, 'Base_c': 1}})
+        
+
+
+
 
 if __name__ == '__main__':
     unittest.main()

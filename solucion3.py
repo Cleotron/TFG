@@ -39,8 +39,13 @@ def phe_evaporation(phe, bases, p):
     for x in bases:
         for y in bases:
             phe[x.name][y.name] = phe[x.name][y.name] * (1 - p)
-    return phe
-    
+
+
+def update_pheromones(phe, visited, deposit):
+    for i in range(len(visited) - 1):
+        phe[visited[i].name][visited[i + 1].name] = (
+            phe[visited[i].name][visited[i + 1].name] + deposit
+        )
 
 def choose_from_list(bases, l, n):
     sum = 0
@@ -92,9 +97,6 @@ def get_path(original, ants):
         
         while any([b.demand < 0 for b in bases]):     
             next = choose_next(now, bases, phe, truck)
-            
-            #update pheromones
-            phe[bases[now].name][bases[next].name] += 1  
     
             if bases[next].demand > 0:
                 truck = truck + bases[next].demand
@@ -115,8 +117,12 @@ def get_path(original, ants):
             #update visited
             visited.append(bases[next])
             
-            #pheromone evaporation
-            phe_evaporation(phe, bases, 0.5)
+        #pheromone evaporation
+        phe_evaporation(phe, bases, 0.5)
+        
+        #update pheromones
+        deposit = 1 / (get_distance(visited))
+        update_pheromones(phe, visited, deposit)
         
         if (not best) or (get_distance(visited) < get_distance(best)):
             best = visited
