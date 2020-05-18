@@ -28,11 +28,11 @@ def get_distance(base_list):
 
 
 def set_pheromones(phe, original, ants):
+    d = get_distance(solucion1.get_path(original))
+    init_phe = ants/ d
     for x in original:
         phe[x.name] = {}
         for y in original:
-            d = get_distance(solucion1.get_path(original))
-            init_phe = ants/ d
             phe[x.name][y.name] = init_phe
 
 def phe_evaporation(phe, bases, p):
