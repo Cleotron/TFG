@@ -23,9 +23,13 @@ def get_distance(base_list):
     return distance
 
 def get_path(bases):
-    ordered = sorted(bases, key=lambda Base: Base.demand, reverse=True)
-    
-    return ordered
+    best = []
+    for _ in range(100):
+        ordered = sorted(bases, key=lambda Base: Base.demand, reverse=True)
+        if (not best) or get_distance(ordered) < get_distance(best):
+            best = ordered
+        
+    return best
 
 def main():
     original = load_data('C:\\Users\\ana\\Nextcloud\\UOC\\PECS2020\\codigoTFG\\Bicimad0618.csv')
