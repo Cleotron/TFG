@@ -6,7 +6,7 @@ Created on Mon Apr 13 19:00:16 2020
 """
 import math
 
-from bases_csv import load_data
+from bases_csv import get_bases
 import data
 
 
@@ -24,7 +24,7 @@ def get_distance(base_list):
 
 def get_path(bases):
     best = []
-    for _ in range(100):
+    for _ in range(1000):
         ordered = sorted(bases, key=lambda Base: Base.demand, reverse=True)
         if (not best) or get_distance(ordered) < get_distance(best):
             best = ordered
@@ -32,7 +32,7 @@ def get_path(bases):
     return best
 
 def main():
-    original = load_data('C:\\Users\\ana\\Nextcloud\\UOC\\PECS2020\\codigoTFG\\Bicimad0618.csv')
+    original = get_bases()
     
     #remove stations with demand = 0
     original = [b for b in original if b.demand != 0]

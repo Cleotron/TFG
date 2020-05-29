@@ -8,7 +8,7 @@ import copy
 import math
 import random
 
-from bases_csv import load_data
+from bases_csv import get_bases
 import data
 
 
@@ -33,7 +33,7 @@ def get_path(original):
     #best path so far
     best = []
 
-    for _ in range(100):
+    for _ in range(150):
         bases = copy.deepcopy(original) 
         visited = []
         
@@ -65,7 +65,7 @@ def get_path(original):
     return best
 
 def main():
-    original = load_data('C:\\Users\\ana\\Nextcloud\\UOC\\PECS2020\\codigoTFG\\Bicimad0618.csv')
+    original = get_bases()
     
     #remove stations with demand = 0
     original = [b for b in original if b.demand != 0]

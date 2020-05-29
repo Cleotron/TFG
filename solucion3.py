@@ -9,7 +9,7 @@ import copy
 import math
 import random
 
-from bases_csv import load_data
+from bases_csv import get_bases
 import data
 import solucion1
 
@@ -130,12 +130,12 @@ def get_path(original, ants):
     return best
  
 def main():
-    original = load_data('C:\\Users\\ana\\Nextcloud\\UOC\\PECS2020\\codigoTFG\\Bicimad0618.csv')
+    original = get_bases()
     
     #remove stations with demand = 0
     original = [b for b in original if b.demand != 0]
 
-    result = get_path(original, 50)
+    result = get_path(original, 1000)
     print([o.name for o in result])
     print("total:" , get_distance(result))
 
