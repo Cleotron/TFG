@@ -63,12 +63,10 @@ def choose_next(now, bases, phe, truck):
     for i, base in enumerate(bases):
         phi = phe[bases[now].name][base.name]
         d = get_euclidean(bases[now], base)
-        #if bases[now].name == base.name:
         if d == 0 or base.demand == 0 or (base.demand < 0 and -base.demand > truck):    
             prob = 0
         else:
             prob = phi / (d**2)
-            #prob = random.uniform(1000, 10000)
         sum_prob += prob
         prob_list.append(prob)
     n = random.uniform(0.0, sum_prob)    
