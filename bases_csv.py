@@ -49,7 +49,7 @@ def get_bases():
     return bases    
 
 def main():
-    bases = load_data('C:\\Users\\ana\\Nextcloud\\UOC\\PECS2020\\codigoTFG\\Bicimad0618.csv')
+    bases = load_data('Bicimad0618.csv')
     write_csv(bases)
     
 if __name__ == "__main__":
